@@ -63,5 +63,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
         api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        implementation "com.soywiz.korlibs.korma:korma-jvm:2.2.2"
+
     }
 }
