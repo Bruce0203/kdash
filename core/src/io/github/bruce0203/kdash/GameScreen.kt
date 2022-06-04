@@ -15,12 +15,25 @@ import com.badlogic.gdx.utils.viewport.StretchViewport
 
 open class GameScreen : ScreenAdapter() {
 
+    val batch by lazy { SpriteBatch() }
     val overlay by lazy { SpriteBatch() }
     val grid by lazy { SpriteBatch() }
     private val camera by lazy { OrthographicCamera(50f, 50f) }
 
+    val font10 = generateFont(100)
+
+    init {
+        Gdx.input.inputProcessor = Input{false}
+    }
+
     fun centerCamera() {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
+    }
+
+    fun make() {
+        ScreenUtils.clear(0f, 0f, 0f, 1f)
+        centerCamera()
+        drawGrid()
     }
 
     override fun show() {
@@ -28,12 +41,16 @@ open class GameScreen : ScreenAdapter() {
         batch.setProjectionMatrix(camera.combined);
         sr.color = Color.WHITE
         sr.projectionMatrix = camera.combined
-        centerCamera()
+        make()
     }
 
-    override fun render(delta: Float) {
+    override fun dispose() {
+        font10.dispose()
+        grid.dispose()
+        overlay.dispose()
+    }
 
-        ScreenUtils.clear(0f, 0f, 0f, 1f)
+    private fun drawGrid() {
         grid.begin()
         ShapeRenderer().apply {
             setAutoShapeType(true)
@@ -42,23 +59,24 @@ open class GameScreen : ScreenAdapter() {
             line(10f, 0f, 10f, graphics.height.toFloat())
             end()
         }
-        val font = BitmapFont()
+        grid.end()
+    }
+
+    override fun render(delta: Float) {
         val width = Gdx.graphics.width.toFloat()
         val height = Gdx.graphics.height.toFloat()
-        font.data.setScale(2f)
         overlay.begin()
-        font.draw(overlay, "FPS: ${Gdx.graphics.framesPerSecond}", 0f, 100f, width, Align.center, true)
+        font10.draw(overlay, "FPS: ${Gdx.graphics.framesPerSecond}", 0f, 100f, width, Align.center, true)
         overlay.end()
-        grid.end()
     }
 
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
-        centerCamera()
+        make()
     }
 
     override fun resume() {
         super.resume()
-        centerCamera()
+        make()
     }
 }

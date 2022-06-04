@@ -3,9 +3,7 @@ package io.github.bruce0203.kdash
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
-val batch by lazy { SpriteBatch() }
 var screen: Screen = MainScreen()
     set(value) {
         field.dispose()

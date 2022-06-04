@@ -3,23 +3,23 @@ package io.github.bruce0203.kdash
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.ScreenUtils
 
 class MainScreen : ScreenAdapter() {
 
-    val ease = Ease()
+    val batch by lazy { SpriteBatch() }
+    val font100 = generateFont(100)
+    val font25 = generateFont(25)
 
     override fun render(delta: Float) {
         ScreenUtils.clear(0f, 0f, 0f, 1f)
         batch.begin()
-        val font = BitmapFont()
         val width = Gdx.graphics.width.toFloat()
         val height = Gdx.graphics.height.toFloat()
-        font.data.setScale(5f)
-        font.draw(batch, "KDash", 0f, height*13/16, width, Align.center, true)
-        font.data.setScale(2f * ease.eased)
-        font.draw(batch, ">> press any key to start playing <<", 0f, height*10/16, width, Align.center, true)
+        font100.draw(batch, "KDash", 0f, height*13/16, width, Align.center, true)
+        font25.draw(batch, ">> press any key to start playing <<", 0f, height*10/16, width, Align.center, true)
         batch.end()
         Gdx.input.inputProcessor = Input {
             screen = GameScreen()
@@ -27,5 +27,9 @@ class MainScreen : ScreenAdapter() {
         }
     }
 
-    override fun dispose() { batch.dispose() }
+    override fun dispose() {
+        batch.dispose()
+        font100.dispose()
+        font25.dispose()
+    }
 }
