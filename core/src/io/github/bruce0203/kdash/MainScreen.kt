@@ -13,6 +13,10 @@ class MainScreen : ScreenAdapter() {
     val font100 = generateFont(100)
     val font25 = generateFont(25)
 
+    override fun show() {
+        screen = GameScreen("test")
+    }
+
     override fun render(delta: Float) {
         ScreenUtils.clear(0f, 0f, 0f, 1f)
         batch.begin()
@@ -22,7 +26,7 @@ class MainScreen : ScreenAdapter() {
         font25.draw(batch, ">> press any key to start playing <<", 0f, height*10/16, width, Align.center, true)
         batch.end()
         Gdx.input.inputProcessor = Input {
-            screen = GameScreen()
+            screen = GameScreen("test")
             false
         }
     }
