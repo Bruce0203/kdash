@@ -14,7 +14,7 @@
 
 ---
 
-- [x] Gradle Kotlin DSL
+- [ ] Gradle Kotlin DSL
 - [x] libGDX with Kotlin 
 - [x] Github VCS
 - [ ] Java
