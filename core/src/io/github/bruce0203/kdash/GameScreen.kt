@@ -3,6 +3,7 @@ package io.github.bruce0203.kdash
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Gdx.graphics
 import com.badlogic.gdx.ScreenAdapter
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -25,7 +26,7 @@ open class GameScreen(private val name: String) : ScreenAdapter() {
         val map = ArrayList<Pair<Cell, Float>>()
         for (x in 0 until layer.width) for (y in 0 until layer.height) {
             layer.getCell(x, y)?.apply {
-                map.add(Pair(this, (layer.tileHeight * y).toFloat()).apply { println(second) })
+                map.add(Pair(this, (layer.tileHeight * y).toFloat()))
             }
         }
         map
@@ -36,50 +37,46 @@ open class GameScreen(private val name: String) : ScreenAdapter() {
     private val overlay by lazy { SpriteBatch() }
     private val divAmount = map.properties["width"] as Int
     private val tileWidth = map.properties["tilewidth"] as Int
+    private val cameraZoom = 10f
     private val camera by lazy {
-        val multiply = 3
-        val width = (tileWidth * divAmount * multiply).toFloat()
+        val width = (tileWidth * divAmount * cameraZoom).toFloat()
         OrthographicCamera(width, width)
     }
     private val auditLine by lazy { 10/16f * camera.viewportHeight }
 
-    private val font10 = generateFont(100)
+    private val font30 = generateFont(30)
     private var cameraOffsetY = 0f
     private var speed = 1f
     private var acc = 0.1f
         set(value) { field = max(5f, value) }
+    private var text = ""
+    private var leftY = 0f
 
     init {
-        println(auditLine + cameraOffsetY)
         Gdx.input.inputProcessor = Input { key ->
-            notePool.filter { abs(it.second- (auditLine + cameraOffsetY).apply { println(this) }) < 20f }.forEach { pair ->
-                pair.first.tile = null
-                notePool.remove(pair)
-                println("asdfasdf")
-            }
+
+
             false
         }
     }
 
     private fun centerCamera() {
-        camera.position.set(camera.viewportWidth/3/2, cameraOffsetY, 0f);
+        camera.position.set(camera.viewportWidth / cameraZoom*2, cameraOffsetY, 0f);
     }
 
     private fun cameraMovement() {
-        speed += acc * graphics.deltaTime
         cameraOffsetY += speed
         camera.position.y = cameraOffsetY
     }
 
     override fun show() {
-        camera.far = 1000f
         batch.projectionMatrix = camera.combined
         centerCamera()
     }
 
     override fun dispose() {
         tiled.dispose()
-        font10.dispose()
+        font30.dispose()
         batch.dispose()
         map.dispose()
         renderer.dispose()
@@ -95,14 +92,40 @@ open class GameScreen(private val name: String) : ScreenAdapter() {
                 line(x, 0f, x, graphics.height.toFloat())
             }
             line(0f, auditLine, graphics.width.toFloat(), auditLine)
+            line(100f, leftY, 100f, auditLine)
             end()
         }
     }
 
     private fun drawFpsOverlay() {
         overlay.begin()
-        font10.draw(overlay, "FPS: ${graphics.framesPerSecond}", 0f, 100f, graphics.width.toFloat(), Align.center, false)
+        font30.draw(overlay, """
+            |FPS: ${graphics.framesPerSecond}
+            |$text
+        """.trimMargin(), 0f, graphics.height.toFloat(), graphics.width.toFloat(), Align.center, false)
         overlay.end()
+    }
+
+    private fun noteAudit() {
+        notePool.map { Pair(it, -((auditLine + cameraOffsetY) - it.second)) }.filter { it.second >= 0 }
+            .sortedBy { it.second }.map { Pair(it.first.first, it.second)}
+            .firstOrNull()?.let { pair ->
+                text = pair.second.toString()
+                ShapeRenderer().apply {
+                    setAutoShapeType(true)
+                    color = Color.GREEN
+                    begin()
+                    leftY = auditLine - pair.second
+                    end()
+                }
+
+/*
+                if (pair.second <= 20) {
+                    pair.first.tile = null
+                    notePool.removeIf { pair.first == it.first }
+                }
+*/
+            }
     }
 
 
@@ -111,6 +134,7 @@ open class GameScreen(private val name: String) : ScreenAdapter() {
         cameraMovement()
         drawFpsOverlay()
         drawGrid()
+        noteAudit()
 
         renderer.setView(camera)
         renderer.render()
