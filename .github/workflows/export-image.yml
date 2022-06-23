@@ -41,7 +41,6 @@ jobs:
             node node_modules/unzip/unzip.js $ZIP.zip
             cd ..
             cd assets
-            cd ..
             rm -r $ZIP.zip
             cd ..
           done
