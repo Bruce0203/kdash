@@ -33,7 +33,11 @@ jobs:
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            node piskel-cli/index.js $file --output ./assets/$file --scaledWidth 512 --scaledHeight 512
+            node piskel-cli/index.js $file --pixiMovie true --output ./assets/$file --scaledWidth 512 --scaledHeight 512
+            cd assets
+            unzip /assets/$file.zip 
+            rm -r /assets/$file.zip
+            cd ..
           done
           rm -r piskel-cli
       - run: |
