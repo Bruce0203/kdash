@@ -29,6 +29,7 @@ jobs:
       - name: clone piskel-cli repo
         run: |
           git clone https://github.com/Bruce0203/piskel-cli
+          npm install all
           cd piskel-cli
       - name: List all changed files
         run: |
