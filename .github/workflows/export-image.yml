@@ -28,7 +28,7 @@ jobs:
         run: mkdir assets
       - name: clone piskel-cli repo
         run: |
-          git clone https://github.com/jordanjwatkins/piskel-cli
+          git clone https://github.com/Bruce0203/piskel-cli
           cd piskel-cli
           npm install phantomjs
       - name: List all changed files
