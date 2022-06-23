@@ -22,7 +22,6 @@ jobs:
         uses: tj-actions/changed-files@v23
         with:
           files: |
-            piskel
             *.piskel
       - name: mkdirs assets directory
         run: mkdir assets
@@ -43,7 +42,7 @@ jobs:
           git config --global user.name Bruce0203
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
           echo "$PWD"
-          for file in assets/piskel/*; do
+          for file in assets/*; do
             cp -r $file ${{ env.repo }}/assets
           done
           cd ${{ env.repo }}
