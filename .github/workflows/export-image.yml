@@ -1,0 +1,51 @@
+name: export-image
+on:
+  push:
+env:
+  assets-branch: assets
+  repo: kdash
+  url: Bruce0203/kdash
+jobs:
+  export-image:
+    # runs-on: self-hosted
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v23
+        with:
+          files: |
+            piskel
+            *.piskel
+      - name: mkdirs assets directory
+        run: mkdir assets
+      - name: clone piskel-cli repo
+        run: |
+          git clone https://github.com/jordanjwatkins/piskel-cli
+          cd piskel-cli
+          npm install phantomjs
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            node piskel-cli/index.js $file --output ./assets/$file --scaledWidth 512 --scaledHeight 512
+          done
+          rm -r piskel-cli
+      - run: |
+          echo ${{ github.actor }}
+          git config --global user.email BruceFreedy@gmail.com
+          git config --global user.name Bruce0203
+          git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
+          echo "$PWD"
+          for file in assets/piskel; do
+            cp -r $file ${{ env.repo }}/assets
+          done
+          cd ${{ env.repo }}
+          git add .
+          git commit -m "change assets"
+          git push origin
