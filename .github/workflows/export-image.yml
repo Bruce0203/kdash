@@ -31,14 +31,14 @@ jobs:
           git clone https://github.com/jordanjwatkins/piskel-cli
           cd piskel-cli
           npm install phantomjs
-          npm install -g unzip
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             node piskel-cli/index.js $file --pixiMovie true --output ./assets/$file --scaledWidth 512 --scaledHeight 512
+            npm install unzip
             cd assets
             ZIP=/assets/$file : '(.+?)(\.[^.]*$|$)'
-            unzip $ZIP.zip
+            node ${{ github.GITHUB_WORKSPACE }}/piskel-cli/node_modules/unzip/unzip.js $ZIP.zip
             rm -r $ZIP.zip
             cd ..
           done
