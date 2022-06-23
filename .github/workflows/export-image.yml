@@ -36,6 +36,7 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             node piskel-cli/index.js $file --pixiMovie true --output ./assets/$file --scaledWidth 512 --scaledHeight 512
             cd assets
+            npm install unzip
             ZIP=/assets/$file : '(.+?)(\.[^.]*$|$)'
             unzip $ZIP.zip
             rm -r $ZIP.zip
