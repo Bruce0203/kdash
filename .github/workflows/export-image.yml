@@ -38,7 +38,8 @@ jobs:
             npm install unzip
             cd assets
             ZIP=/assets/$file : '(.+?)(\.[^.]*$|$)'
-            node ${{ github.GITHUB_WORKSPACE }}/piskel-cli/node_modules/unzip/unzip.js $ZIP.zip
+            cd piskel-cli
+            node node_modules/unzip/unzip.js $ZIP.zip
             rm -r $ZIP.zip
             cd ..
           done
