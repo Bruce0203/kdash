@@ -29,8 +29,8 @@ jobs:
       - name: clone piskel-cli repo
         run: |
           git clone https://github.com/Bruce0203/piskel-cli
-          npm install all
           cd piskel-cli
+          npm install phantomjs
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
