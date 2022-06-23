@@ -7,11 +7,12 @@ env:
   url: Bruce0203/kdash
 jobs:
   export-image:
-    # runs-on: self-hosted
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-    runs-on: ${{ matrix.os }}
+    runs-on: self-hosted
+    # strategy:
+      # matrix:
+        # os: [ ubuntu-latest ]
+    # runs-on: ${{ matrix.os }}
+    #expr 
     steps:
       - uses: actions/checkout@v3
         with:
@@ -35,8 +36,9 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             node piskel-cli/index.js $file --pixiMovie true --output ./assets/$file --scaledWidth 512 --scaledHeight 512
             cd assets
-            unzip /assets/$file.zip 
-            rm -r /assets/$file.zip
+            ZIP=/assets/$file : '(.+?)(\.[^.]*$|$)'
+            unzip $ZIP.zip
+            rm -r $ZIP.zip
             cd ..
           done
           rm -r piskel-cli
