@@ -41,7 +41,9 @@ jobs:
             node node_modules/unzip/unzip.js $ZIP.zip
             cd ..
             cd assets
-            rm -r '$ZIP.zip'
+            echo $ZIP
+            echo ($ZIP).zip
+            rm -r ($ZIP).zip
             cd ..
           done
           rm -r piskel-cli
