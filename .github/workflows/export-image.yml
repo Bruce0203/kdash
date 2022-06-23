@@ -42,8 +42,8 @@ jobs:
             cd ..
             cd assets
             echo $ZIP
-            echo ($ZIP).zip
-            rm -r ($ZIP).zip
+            echo $(ZIP).zip
+            rm -r $(ZIP).zip
             cd ..
           done
           rm -r piskel-cli
