@@ -36,6 +36,9 @@ jobs:
           done
           rm -r piskel-cli
       - run: |
+          echo ${{ github.actor }}
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
           for file in assets; do
             cp -r $file ${{ env.repo }}/assets
