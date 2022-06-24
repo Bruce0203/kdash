@@ -43,26 +43,21 @@ jobs:
       - name: Run step if any of the listed files above is deleted
         run: |
           for file in ${{ steps.changed-files.outputs.renamed_files }}; do
-            echo $file
-            if [ -f ${{env.repo}}/assets/$file ]; then
               filename=$(basename -- "$fullfile")
               extension="${filename##*.}"
               filename="${filename%.*}"
               rm -r ${{env.repo}}/assets/$filename.png
               rm -r ${{env.repo}}/assets/$filename.json
-            fi
           done
       - name: Run step if any of the listed files above is deleted
         if: steps.changed-files.outputs.any_deleted == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.deleted_files }}; do
-            if [ -f ${{env.repo}}/assets/$file ]; then
               filename=$(basename -- "$fullfile")
               extension="${filename##*.}"
               filename="${filename%.*}"
               rm -r ${{env.repo}}/assets/$filename.png
               rm -r ${{env.repo}}/assets/$filename.json
-            fi
           done
       - run: |
           for file in assets; do
