@@ -62,7 +62,7 @@ jobs:
       - run: |
           for file in ./assets/; do
             echo $file
-            cp -r $file ${{env.repo}}/assets
+            cp -r $file ${{env.repo}}/assets/
           done
           cd ${{ env.repo }}
           git add .
