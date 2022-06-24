@@ -42,21 +42,26 @@ jobs:
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
       - name: Run step if any of the listed files above is deleted
         run: |
-          echo ${{ steps.changed-files.outputs.renamed_files }}
           for file in ${{ steps.changed-files.outputs.renamed_files }}; do
             echo $file
             if [ -f ${{env.repo}}/assets/$file ]; then
-              rm -r ${{env.repo}}/assets/$file
+              filename=$(basename -- "$fullfile")
+              extension="${filename##*.}"
+              filename="${filename%.*}"
+              rm -r ${{env.repo}}/assets/$filename.png
+              rm -r ${{env.repo}}/assets/$filename.json
             fi
           done
       - name: Run step if any of the listed files above is deleted
         if: steps.changed-files.outputs.any_deleted == 'true'
         run: |
-          echo ${{ steps.changed-files.outputs.deleted_files }}
           for file in ${{ steps.changed-files.outputs.deleted_files }}; do
-            echo $file
             if [ -f ${{env.repo}}/assets/$file ]; then
-              rm -r ${{env.repo}}/assets/$file
+              filename=$(basename -- "$fullfile")
+              extension="${filename##*.}"
+              filename="${filename%.*}"
+              rm -r ${{env.repo}}/assets/$filename.png
+              rm -r ${{env.repo}}/assets/$filename.json
             fi
           done
       - run: |
