@@ -41,6 +41,7 @@ jobs:
           git config --global user.email BruceFreedy@gmail.com
           git config --global user.name Bruce0203
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
+          rm -r ${{ env.repo }}/assets
           echo "$PWD"
           for file in assets; do
             cp -r $file ${{ env.repo }}/assets
