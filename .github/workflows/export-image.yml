@@ -44,7 +44,9 @@ jobs:
         if: steps.changed-files.outputs.any_deleted == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.deleted_files }}; do
-            rm -r ${{ env.repo }}/assets/$file
+            if [ -f $file ]; then
+              rm -r ${{ env.repo }}/assets/$file
+            fi
           done
       - run: |
           for file in assets; do
