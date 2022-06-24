@@ -21,7 +21,7 @@ jobs:
         uses: tj-actions/changed-files@v23
         with:
           files: |
-            *.piskel
+            **/*.piskel
       - name: mkdirs assets directory
         run: mkdir assets
       - name: clone piskel-cli repo
