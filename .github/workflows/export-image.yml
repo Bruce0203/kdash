@@ -43,22 +43,22 @@ jobs:
       - name: Run step if any of the listed files above is deleted
         run: |
           for file in ${{ steps.changed-files.outputs.renamed_files }}; do
-            if [ -f ${{ env.repo }}/assets/$file ]; then
-              rm -r ${{ env.repo }}/assets/$file
+            if [ -f ${{env.repo}}/assets/$file ]; then
+              rm -r ${{env.repo}}/assets/$file
             fi
           done
       - name: Run step if any of the listed files above is deleted
         if: steps.changed-files.outputs.any_deleted == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.deleted_files }}; do
-            if [ -f ${{ env.repo }}/assets/$file ]; then
-              rm -r ${{ env.repo }}/assets/$file
+            if [ -f ${{env.repo}}/assets/$file ]; then
+              rm -r ${{env.repo}}/assets/$file
             fi
           done
       - run: |
           for file in assets; do
             echo $file
-            cp -r $file ${{ env.repo }}/assets
+            cp -r $file ${{env.repo}}/assets
           done
           cd ${{ env.repo }}
           git add .
