@@ -1,6 +1,6 @@
 document.addEventListener(START, () => {
     app.loader
-    .add('assets/cat/cat.json')
+    .add('assets/kat.json')
     .load(onAssetsLoaded);
 })
 
