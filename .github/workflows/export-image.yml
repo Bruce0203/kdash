@@ -40,6 +40,13 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
+      - name: Run step if any of the listed files above is deleted
+        if: steps.changed-files.outputs.any_deleted == 'true'
+        run: |
+          for file in ${{ steps.changed-files.outputs.deleted_files }}; do
+            rm -r ${{ env.repo }}/assets/$file
+          done
+      - run: |
           rm -r ${{ env.repo }}/assets
           for file in assets; do
             cp -r $file ${{ env.repo }}/assets
