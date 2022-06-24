@@ -40,6 +40,7 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
+          rm -r ${{ env.repo }}/assets
           for file in assets; do
             cp -r $file ${{ env.repo }}/assets
           done
