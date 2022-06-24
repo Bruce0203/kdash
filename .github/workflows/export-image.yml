@@ -40,9 +40,9 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
-      - name: Run step if any of the listed files above is deleted
+      - name: Run any of the listed files above is renamed
         run: |
-          for file in ${{ steps.changed-files.outputs.renamed_files }}; do
+          for file in ${{ steps.changed-files.outputs.all_old_new_renamed_files }}; do
               filename=$(basename -- "$file")
               extension="${filename##*.}"
               filename="${filename%.*}"
