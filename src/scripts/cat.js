@@ -12,7 +12,7 @@ function onAssetsLoaded() {
         const val = i < 4 ? `${i}` : i;
 
         // magically works since the spritesheet was loaded with the pixi loader
-        frames.push(PIXI.Texture.from(`cat${val}.png`));
+        frames.push(PIXI.Texture.from(`kat${val}.png`));
     }
 
     // create an AnimatedSprite (brings back memories from the days of Flash, right ?)
