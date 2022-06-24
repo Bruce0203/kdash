@@ -34,6 +34,7 @@ jobs:
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
       - run: |
+          rm -r -f ${{env.repo}}/assets
           mkdir -p ${{env.repo}}/assets
           for file in ./assets/; do
             echo $file
