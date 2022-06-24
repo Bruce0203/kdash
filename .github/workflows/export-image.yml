@@ -36,7 +36,6 @@ jobs:
           done
           rm -r piskel-cli
       - run: |
-          echo ${{ github.actor }}
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.url }}
@@ -48,7 +47,7 @@ jobs:
               rm -r -f ${{env.repo}}/assets/$filename.json
           done
       - name: Run step if any of the listed files above is deleted
-        if: steps.changed-files.outputs.any_deleted == 'true'
+        if: steps.changed-files.outputs.deleted_files == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.deleted_files }}; do
               filename=$(basename $file .piskel)
