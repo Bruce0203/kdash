@@ -44,7 +44,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            if [ -f $file ]; then
+            if [ -f ${{ env.repo }}/assets/$file ]; then
               rm -r ${{ env.repo }}/assets/$file
             fi
           done
@@ -52,7 +52,7 @@ jobs:
         if: steps.changed-files.outputs.any_deleted == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.deleted_files }}; do
-            if [ -f $file ]; then
+            if [ -f ${{ env.repo }}/assets/$file ]; then
               rm -r ${{ env.repo }}/assets/$file
             fi
           done
