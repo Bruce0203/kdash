@@ -60,7 +60,7 @@ jobs:
               rm -r ${{env.repo}}/assets/$filename.json
           done
       - run: |
-          mkdir ${{env.repo}}/assets
+          mkdir -p ${{env.repo}}/assets
           for file in ./assets/; do
             echo $file
             cp -r $file ${{env.repo}}/
