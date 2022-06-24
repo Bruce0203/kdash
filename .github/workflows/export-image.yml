@@ -46,8 +46,8 @@ jobs:
               filename=$(basename -- "$file")
               extension="${filename##*.}"
               filename="${filename%.*}"
-              rm -r ${{env.repo}}/assets/$filename.png
-              rm -r ${{env.repo}}/assets/$filename.json
+              rm -r -f ${{env.repo}}/assets/$filename.png
+              rm -r -f ${{env.repo}}/assets/$filename.json
           done
       - name: Run step if any of the listed files above is deleted
         if: steps.changed-files.outputs.any_deleted == 'true'
@@ -56,8 +56,8 @@ jobs:
               filename=$(basename -- "$file")
               extension="${filename##*.}"
               filename="${filename%.*}"
-              rm -r ${{env.repo}}/assets/$filename.png
-              rm -r ${{env.repo}}/assets/$filename.json
+              rm -r -f ${{env.repo}}/assets/$filename.png
+              rm -r -f ${{env.repo}}/assets/$filename.json
           done
       - run: |
           mkdir -p ${{env.repo}}/assets
