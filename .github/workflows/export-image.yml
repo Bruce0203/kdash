@@ -60,7 +60,7 @@ jobs:
               rm -r ${{env.repo}}/assets/$filename.json
           done
       - run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          for file in ./assets/; do
             echo $file
             cp -r $file ${{env.repo}}/assets
           done
