@@ -47,7 +47,7 @@ jobs:
               rm -r -f ${{env.repo}}/assets/$filename.json
           done
       - name: Run step if any of the listed files above is deleted
-        if: steps.changed-files.outputs.deleted_files == 'true'
+        if: steps.changed-files.outputs.only_deleted == 'true'
         run: |
           for file in ${{ steps.changed-files.outputs.deleted_files }}; do
               filename=$(basename $file .piskel)
