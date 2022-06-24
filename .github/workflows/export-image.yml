@@ -60,9 +60,10 @@ jobs:
               rm -r ${{env.repo}}/assets/$filename.json
           done
       - run: |
+          mkdir ${{env.repo}}/assets
           for file in ./assets/; do
             echo $file
-            cp -r $file ${{env.repo}}/assets/
+            cp -r $file ${{env.repo}}/
           done
           cd ${{ env.repo }}
           git add .
