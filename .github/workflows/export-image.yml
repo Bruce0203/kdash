@@ -47,7 +47,6 @@ jobs:
             rm -r ${{ env.repo }}/assets/$file
           done
       - run: |
-          rm -r ${{ env.repo }}/assets
           for file in assets; do
             cp -r $file ${{ env.repo }}/assets
           done
