@@ -1,0 +1,6 @@
+[submodule "piskel-embed"]
+	path = piskel-embed
+	url = https://github.com/Bruce0203/piskel-embed
+[submodule "piskel-cli"]
+	path = piskel-cli
+	url = https://github.com/Bruce0203/piskel-cli
