@@ -20,4 +20,5 @@ jobs:
           rm -r -f piskel-embed
           git add .
           git commit -m "remove files for deploy"
+          git checkout -b gh-pages
           git push origin gh-pages
