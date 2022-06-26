@@ -16,8 +16,7 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
       - run: |
-          rm -r -f piskel
-          rm -r -f piskel-embed
+          mv src docs
           git add .
           git commit -m "remove files for deploy"
           git checkout -b gh-pages
