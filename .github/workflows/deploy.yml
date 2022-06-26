@@ -1,0 +1,23 @@
+name: deploy
+on:
+  push:
+jobs:
+  deploy:
+    # runs-on: self-hosted
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+      - run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      - run: |
+          rm -r -f piskel
+          rm -r -f piskel-embed
+          git add .
+          git commit -m "remove files for deploy"
+          git push origin gh-pages
