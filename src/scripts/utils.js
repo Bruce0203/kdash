@@ -5,8 +5,7 @@ function center(sprite) {
 
 function newAnim(name, callback) {
     const frames = [];
-    
-    app.loader
+    new PIXI.Loader()
     .add(`assets/${name}.json`)
     .load((file) => {
         console.log(file.resources[`assets/${name}.json`].data)
@@ -18,5 +17,6 @@ function newAnim(name, callback) {
         }
         const anim = new PIXI.AnimatedSprite(frames);
         callback(anim)
+        app.loader.reset()
     });
 }

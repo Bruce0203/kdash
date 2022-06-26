@@ -3,7 +3,7 @@ var width, height
 var group
 document.addEventListener(AWAKE, () => {
      app = new PIXI.Application({ 
-        backgroundColor: 0xF9F2ED, 
+        backgroundColor: 0x3AB0FF, 
         width: window.innerWidth - 16,
         height: window.innerHeight - 19.6
     });
