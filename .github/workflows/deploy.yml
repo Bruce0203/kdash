@@ -20,4 +20,4 @@ jobs:
           git add .
           git commit -m "remove files for deploy"
           git checkout -b gh-pages
-          git push origin gh-pages
+          git push origin gh-pages --force
